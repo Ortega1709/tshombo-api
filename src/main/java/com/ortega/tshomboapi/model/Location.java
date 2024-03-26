@@ -8,12 +8,9 @@ import lombok.*;
 
 import java.util.UUID;
 
+
+@Data
 @Entity
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class Location {
 
     @Id
