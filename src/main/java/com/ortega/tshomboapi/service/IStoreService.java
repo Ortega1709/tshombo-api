@@ -1,4 +1,4 @@
 package com.ortega.tshomboapi.service;
 
-public interface UserService {
+public interface IStoreService {
 }

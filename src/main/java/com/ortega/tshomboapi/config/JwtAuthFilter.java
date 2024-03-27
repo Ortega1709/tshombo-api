@@ -1,6 +1,6 @@
 package com.ortega.tshomboapi.config;
 
-import com.ortega.tshomboapi.service.JwtService;
+import com.ortega.tshomboapi.service.IJwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private JwtService jwtService;
+    private IJwtService IJwtService;
     private UserDetailsService userDetailsService;
 
     @Override
@@ -45,13 +45,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // get jwt token
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
+        userEmail = IJwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
             // check if the token is valid
-            if (jwtService.isValidToken(jwt, userDetails)) {
+            if (IJwtService.isValidToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
