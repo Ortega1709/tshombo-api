@@ -24,7 +24,8 @@ public class User {
     private String email;
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
     private Role role;
 
 }

@@ -1,9 +1,7 @@
 package com.ortega.tshomboapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +20,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID roleId;
     private String name;
+
+    @OneToOne(mappedBy = "role")
+    @JsonIgnore
+    private User user;
 
 }
 
