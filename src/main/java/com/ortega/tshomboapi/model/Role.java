@@ -22,6 +22,7 @@ public class Role {
     private String name;
 
     @OneToOne(mappedBy = "role")
+    @JsonIgnore
     private User user;
 }
 

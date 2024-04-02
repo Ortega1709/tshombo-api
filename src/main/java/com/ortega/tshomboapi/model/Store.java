@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +35,6 @@ public class Store {
     private Location location;
 
     @OneToMany(mappedBy = "store")
-    private List<Phone> phones;
+    private Set<Phone> phones;
 
 }

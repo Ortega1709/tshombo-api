@@ -23,7 +23,7 @@ public class Phone {
     private String image;
 
     @ManyToOne
+    @JoinColumn(name="storeId", nullable=false)
     private Store store;
-
 
 }

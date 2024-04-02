@@ -9,7 +9,6 @@ import com.ortega.tshomboapi.repository.UserRepository;
 import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,33 +27,37 @@ public class AuthService implements IAuthService {
 
     @Override
     public ResponseEntity<Object> authentication(AuthDto authDto) {
-        return ResponseHandler.response("", HttpStatus.OK, null);
+        Optional<User> user = userRepository.findUserByEmail(authDto.getEmail());
+        if (user.isPresent()) {
+            if (passwordEncoder.matches(authDto.getPassword(), user.get().getPassword())) {
+                return ResponseHandler.response("Authentication success", HttpStatus.OK, user);
+            }
+        }
+
+        return ResponseHandler.response("Authentication Error", HttpStatus.BAD_REQUEST, null);
     }
 
     @Override
     public ResponseEntity<Object> register(RegisterDto registerDto) {
-        if (userRepository.existsByEmail(registerDto.getEmail())) {
+        if (userRepository.findUserByEmail(registerDto.getEmail()).isPresent()) {
             return ResponseHandler.response("Email is already taken", HttpStatus.BAD_REQUEST, null);
         }
 
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
+        if (userRepository.findUserByUsername(registerDto.getUsername()).isPresent()) {
             return ResponseHandler.response("Username is already taken", HttpStatus.BAD_REQUEST, null);
         }
 
         // find a role by name
-        Optional<Role> role = roleRepository.findRoleByName(registerDto.getRoleName());
-        User user = new User();
+        Role role = roleRepository.findRoleByName(registerDto.getRole());
 
-        // if a role is present
-        if (role.isPresent()) {
-            user = User.builder()
+        User user = User.builder()
                     .username(registerDto.getUsername())
-                    .email(registerDto.getPassword())
+                    .email(registerDto.getEmail())
                     .password(passwordEncoder.encode(registerDto.getPassword()))
-                    .role(role.get())
+                    .role(role)
                     .build();
-        }
 
+        userRepository.save(user);
         return ResponseHandler.response("User created successfully", HttpStatus.OK, user);
     }
 }
