@@ -49,7 +49,6 @@ public class AuthService implements IAuthService {
 
         // find a role by name
         Role role = roleRepository.findRoleByName(registerDto.getRole());
-
         User user = User.builder()
                     .username(registerDto.getUsername())
                     .email(registerDto.getEmail())
