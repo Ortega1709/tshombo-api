@@ -19,11 +19,9 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID roleId;
-    private String name;
 
-    @OneToOne(mappedBy = "role")
-    @JsonIgnore
-    private User user;
-
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 }
 
