@@ -9,6 +9,7 @@ import com.ortega.tshomboapi.repository.UserRepository;
 import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,6 +39,7 @@ public class AuthService implements IAuthService {
     }
 
     @Override
+    @CacheEvict(allEntries = true, value = "user")
     public ResponseEntity<Object> register(RegisterDto registerDto) {
         if (userRepository.findUserByEmail(registerDto.getEmail()).isPresent()) {
             return ResponseHandler.response("Email is already taken", HttpStatus.BAD_REQUEST, null);
