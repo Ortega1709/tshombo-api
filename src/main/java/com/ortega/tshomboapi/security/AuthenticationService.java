@@ -17,7 +17,7 @@ public class AuthenticationService {
 
     private static final String AUTH_TOKEN_HEADER_NAME = "X-API-KEY";
 
-    @Value("${tshombo-api-key}")
+    @Value("${tshombo.api.key}")
     private String AUTH_TOKEN;
 
     public Authentication getAuthentication(HttpServletRequest request) {

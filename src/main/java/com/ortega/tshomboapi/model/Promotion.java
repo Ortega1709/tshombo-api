@@ -21,6 +21,10 @@ public class Promotion {
     private String name;
     private String description;
     private String image;
-    private LocalDateTime endDate;
+    private String endDate;
+
+    @ManyToOne
+    @JoinColumn(name="storeId")
+    private Store store;
 
 }

@@ -19,39 +19,22 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<Object> getAllRoles() {
-        try {
-            return ResponseHandler.response("success", HttpStatus.OK, roleService.getAllRoles());
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.EXPECTATION_FAILED, null);
-        }
+        return roleService.getAllRoles();
     }
 
     @PostMapping
     public ResponseEntity<Object> saveRole(@RequestBody Role role) {
-        try {
-            return ResponseHandler.response("success", HttpStatus.OK, roleService.saveRole(role));
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.EXPECTATION_FAILED, null);
-        }
+        return roleService.saveRole(role);
     }
 
     @PutMapping
     public ResponseEntity<Object> updateRole(@RequestBody Role role) {
-        try {
-            return ResponseHandler.response("success", HttpStatus.OK, roleService.updateRole(role));
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.EXPECTATION_FAILED, null);
-        }
+        return roleService.updateRole(role);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteRole(@PathVariable("id") String id) {
-        try {
-            roleService.deleteRoleById(UUID.fromString(id));
-            return ResponseHandler.response("success", HttpStatus.OK, null);
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.EXPECTATION_FAILED, null);
-        }
+        return roleService.deleteRoleById(UUID.fromString(id));
     }
 
 }

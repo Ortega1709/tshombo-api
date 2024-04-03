@@ -1,4 +1,4 @@
-package com.ortega.tshomboapi.service;
+package com.ortega.tshomboapi.service.impl;
 
 import com.ortega.tshomboapi.dto.AuthDto;
 import com.ortega.tshomboapi.dto.RegisterDto;
@@ -6,6 +6,7 @@ import com.ortega.tshomboapi.model.Role;
 import com.ortega.tshomboapi.model.User;
 import com.ortega.tshomboapi.repository.RoleRepository;
 import com.ortega.tshomboapi.repository.UserRepository;
+import com.ortega.tshomboapi.service.IAuthService;
 import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,7 @@ public class AuthService implements IAuthService {
                     .role(role)
                     .build();
 
-        userRepository.save(user);
-        return ResponseHandler.response("User created successfully", HttpStatus.OK, user);
+        User userRegistered = userRepository.save(user);
+        return ResponseHandler.response("User created successfully", HttpStatus.CREATED, userRegistered);
     }
 }

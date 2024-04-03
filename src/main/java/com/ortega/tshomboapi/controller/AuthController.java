@@ -24,20 +24,12 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<Object> signIn(@RequestBody AuthDto authDto) {
-        try {
-            return authService.authentication(authDto);
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return authService.authentication(authDto);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<Object> signUp(@RequestBody RegisterDto registerDto) {
-        try {
-            return authService.register(registerDto);
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return authService.register(registerDto);
     }
 
 }

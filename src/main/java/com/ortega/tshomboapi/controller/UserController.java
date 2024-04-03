@@ -19,40 +19,22 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
-        try {
-            return ResponseHandler.response("User fetch", HttpStatus.OK, userService.getAllUsers());
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable("id") String id) {
-        try {
-            return ResponseHandler.response("User fetch", HttpStatus.OK, userService.getUserById(UUID.fromString(id)));
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return userService.getUserById(UUID.fromString(id));
     }
 
     @PutMapping
     public ResponseEntity<Object> updateUser(@RequestBody User user) {
-        try {
-            userService.updateUser(user);
-            return ResponseHandler.response("User updated", HttpStatus.OK, user);
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUserById(@PathVariable("id") String id) {
-        try {
-            userService.deleteUserById(UUID.fromString(id));
-            return ResponseHandler.response("User deleted", HttpStatus.OK, null);
-        } catch (Exception e) {
-            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-        }
+        return userService.deleteUserById(UUID.fromString(id));
     }
 }
 

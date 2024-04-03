@@ -37,4 +37,7 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     private List<Phone> phones;
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    private List<Promotion> promotions;
+
 }

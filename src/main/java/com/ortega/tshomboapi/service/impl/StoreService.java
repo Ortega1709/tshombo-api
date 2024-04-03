@@ -1,4 +1,4 @@
-package com.ortega.tshomboapi.service;
+package com.ortega.tshomboapi.service.impl;
 
 import com.ortega.tshomboapi.dto.StoreDto;
 import com.ortega.tshomboapi.model.Location;
@@ -7,13 +7,16 @@ import com.ortega.tshomboapi.model.User;
 import com.ortega.tshomboapi.repository.LocationRepository;
 import com.ortega.tshomboapi.repository.StoreRepository;
 import com.ortega.tshomboapi.repository.UserRepository;
+import com.ortega.tshomboapi.service.IStoreService;
+import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,25 +31,27 @@ public class StoreService implements IStoreService {
 
     @Override
     @Cacheable("store")
-    public List<Store> getAllStores() {
-        return storeRepository.findAll();
+    public ResponseEntity<Object> getAllStores() {
+        return ResponseHandler.response("Stores fetched", HttpStatus.OK, storeRepository.findAll());
     }
 
     @Override
     @Cacheable("store")
-    public Optional<Store> getStoreById(UUID id) {
-        return storeRepository.findById(id);
+    public ResponseEntity<Object> getStoreById(UUID id) {
+        Optional<Store> store = storeRepository.findById(id);
+        return store.map(value -> ResponseHandler.response("Store fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Store not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @Cacheable("store")
-    public Optional<Store> getStoreByUserId(UUID id) {
-        return storeRepository.findStoreByUserId(id);
+    public ResponseEntity<Object> getStoreByUserId(UUID id) {
+        Optional<Store> store = storeRepository.findStoreByUserId(id);
+        return store.map(value -> ResponseHandler.response("Store fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Store not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public void saveStore(UUID userId, StoreDto storeDto) {
+    public ResponseEntity<Object> saveStore(UUID userId, StoreDto storeDto) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
 
@@ -61,13 +66,14 @@ public class StoreService implements IStoreService {
                     .location(location)
                     .build();
 
-            storeRepository.save(store);
+            return ResponseHandler.response("Store created", HttpStatus.CREATED, storeRepository.save(store));
         }
+        return ResponseHandler.response("User not found", HttpStatus.NOT_FOUND, null);
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public void updateStore(UUID userId, StoreDto storeDto) {
+    public ResponseEntity<Object> updateStore(UUID userId, StoreDto storeDto) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             locationRepository.save(storeDto.getLocation());
@@ -78,16 +84,20 @@ public class StoreService implements IStoreService {
                     .avenue(storeDto.getAvenue())
                     .commune(storeDto.getCommune())
                     .rccm(storeDto.getRccm())
+                    .image(storeDto.getImage())
                     .user(user.get())
                     .location(storeDto.getLocation())
                     .build();
-            storeRepository.save(store);
+
+            return ResponseHandler.response("Store updated", HttpStatus.OK, storeRepository.save(store));
         }
+        return ResponseHandler.response("User not found", HttpStatus.NOT_FOUND, null);
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public void deleteStoreById(UUID id) {
+    public ResponseEntity<Object> deleteStoreById(UUID id) {
         storeRepository.deleteById(id);
+        return ResponseHandler.response("User deleted", HttpStatus.OK, null);
     }
 }

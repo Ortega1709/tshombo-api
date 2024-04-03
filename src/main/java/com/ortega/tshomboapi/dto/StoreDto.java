@@ -14,6 +14,7 @@ public class StoreDto {
     private String avenue;
     private String commune;
     private String rccm;
+    private String image;
     private Location location;
 
 }
