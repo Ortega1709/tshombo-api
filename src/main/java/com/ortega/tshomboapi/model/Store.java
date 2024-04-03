@@ -34,7 +34,7 @@ public class Store {
     @JoinColumn(name = "locationId")
     private Location location;
 
-    @OneToMany(mappedBy = "store")
-    private Set<Phone> phones;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    private List<Phone> phones;
 
 }
