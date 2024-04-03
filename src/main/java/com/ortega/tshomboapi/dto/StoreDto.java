@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 public class StoreDto {
 
+    private String storeId;
     private String name;
     private String city;
     private String avenue;

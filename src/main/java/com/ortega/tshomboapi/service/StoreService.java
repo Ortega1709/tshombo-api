@@ -39,9 +39,15 @@ public class StoreService implements IStoreService {
     }
 
     @Override
+    @Cacheable("store")
+    public Optional<Store> getStoreByUserId(UUID id) {
+        return storeRepository.findStoreByUserId(id);
+    }
+
+    @Override
     @CacheEvict(allEntries = true, value = "store")
-    public void saveStore(UUID storeId, StoreDto storeDto) {
-        Optional<User> user = userRepository.findById(storeId);
+    public void saveStore(UUID userId, StoreDto storeDto) {
+        Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
 
             Location location = locationRepository.save(storeDto.getLocation());
@@ -61,8 +67,22 @@ public class StoreService implements IStoreService {
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public void updateStore(StoreDto storeDto) {
-        //storeRepository.save(store);
+    public void updateStore(UUID userId, StoreDto storeDto) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            locationRepository.save(storeDto.getLocation());
+            Store store = Store.builder()
+                    .storeId(UUID.fromString(storeDto.getStoreId()))
+                    .name(storeDto.getName())
+                    .city(storeDto.getCity())
+                    .avenue(storeDto.getAvenue())
+                    .commune(storeDto.getCommune())
+                    .rccm(storeDto.getRccm())
+                    .user(user.get())
+                    .location(storeDto.getLocation())
+                    .build();
+            storeRepository.save(store);
+        }
     }
 
     @Override

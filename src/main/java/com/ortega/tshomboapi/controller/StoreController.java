@@ -27,6 +27,15 @@ public class StoreController {
         }
     }
 
+    @GetMapping("/{userId}/stores")
+    public ResponseEntity<Object> getStoreByUserId(@PathVariable("userId") String userId) {
+        try {
+            return ResponseHandler.response("Store fetch", HttpStatus.OK, storeService.getStoreByUserId(UUID.fromString(userId)));
+        } catch (Exception e) {
+            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
+
     @GetMapping("/stores/{id}")
     public ResponseEntity<Object> getStoreById(@PathVariable("id") String id) {
         try {
@@ -41,6 +50,16 @@ public class StoreController {
         try {
             storeService.saveStore(UUID.fromString(userId), storeDto);
             return ResponseHandler.response("Store added", HttpStatus.OK, storeDto);
+        } catch (Exception e) {
+            return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+        }
+    }
+
+    @PutMapping("/{userId}/stores")
+    public ResponseEntity<Object> updateStore(@PathVariable("userId") String userId, @RequestBody StoreDto storeDto) {
+        try {
+            storeService.updateStore(UUID.fromString(userId), storeDto);
+            return ResponseHandler.response("Store updated", HttpStatus.OK, storeDto);
         } catch (Exception e) {
             return ResponseHandler.response(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }
