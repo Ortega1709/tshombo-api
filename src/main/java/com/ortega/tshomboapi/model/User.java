@@ -2,7 +2,6 @@ package com.ortega.tshomboapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.*;
 
 @Entity
 @Data
@@ -11,14 +10,14 @@ import java.util.*;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     private String username;
     private String email;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    @ManyToOne
+    @JoinColumn(name="roleId", nullable=false)
     private Role role;
 
 }

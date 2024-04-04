@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store, UUID> {
+public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM store WHERE user_id = :userId")
-    Optional<Store> findStoreByUserId(@Param("userId") UUID id);
+    Optional<Store> findStoreByUserId(@Param("userId") Long id);
 
 }

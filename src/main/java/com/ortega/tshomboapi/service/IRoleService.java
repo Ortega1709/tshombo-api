@@ -10,6 +10,6 @@ public interface IRoleService {
 
     public ResponseEntity<Object> getAllRoles();
     public ResponseEntity<Object> saveRole(Role role);
-    public ResponseEntity<Object> deleteRoleById(UUID id);
+    public ResponseEntity<Object> deleteRoleById(Long id);
     public ResponseEntity<Object> updateRole(Role role);
 }

@@ -23,8 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable("id") String id) {
-        return userService.getUserById(UUID.fromString(id));
+    public ResponseEntity<Object> getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
     }
 
     @PutMapping
@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUserById(@PathVariable("id") String id) {
-        return userService.deleteUserById(UUID.fromString(id));
+    public ResponseEntity<Object> deleteUserById(@PathVariable("id") Long id) {
+        return userService.deleteUserById(id);
     }
 }
 

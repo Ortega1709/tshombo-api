@@ -31,7 +31,7 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public ResponseEntity<Object> deleteRoleById(UUID id) {
+    public ResponseEntity<Object> deleteRoleById(Long id) {
         roleRepository.deleteById(id);
         return ResponseHandler.response("Role deleted", HttpStatus.OK, null);
     }

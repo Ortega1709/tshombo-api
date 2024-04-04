@@ -33,8 +33,8 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteRole(@PathVariable("id") String id) {
-        return roleService.deleteRoleById(UUID.fromString(id));
+    public ResponseEntity<Object> deleteRole(@PathVariable("id") Long id) {
+        return roleService.deleteRoleById(id);
     }
 
 }

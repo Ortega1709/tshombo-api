@@ -10,8 +10,8 @@ import java.util.UUID;
 public interface IUserService {
 
     public ResponseEntity<Object> getAllUsers();
-    public ResponseEntity<Object> getUserById(UUID id);
-    public ResponseEntity<Object> deleteUserById(UUID id);
+    public ResponseEntity<Object> getUserById(Long id);
+    public ResponseEntity<Object> deleteUserById(Long id);
     public ResponseEntity<Object> updateUser(User user);
 
 }

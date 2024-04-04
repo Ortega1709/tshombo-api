@@ -31,14 +31,14 @@ public class UserService implements IUserService {
 
     @Override
     @Cacheable("user")
-    public ResponseEntity<Object> getUserById(UUID id) {
+    public ResponseEntity<Object> getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.map(value -> ResponseHandler.response("User fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("User not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "user")
-    public ResponseEntity<Object> deleteUserById(UUID id) {
+    public ResponseEntity<Object> deleteUserById(Long id) {
         userRepository.deleteById(id);
         return ResponseHandler.response("User deleted", HttpStatus.OK, null);
 

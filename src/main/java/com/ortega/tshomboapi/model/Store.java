@@ -8,17 +8,15 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Store {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID storeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long storeId;
     private String name;
     private String city;
     private String avenue;

@@ -7,17 +7,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Promotion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID promotionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long promotionId;
     private String name;
     private String description;
     private String image;

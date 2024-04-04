@@ -34,21 +34,21 @@ public class PromotionService implements IPromotionService {
 
     @Override
     @Cacheable("promotion")
-    public ResponseEntity<Object> getPromotionById(UUID id) {
+    public ResponseEntity<Object> getPromotionById(Long id) {
         Optional<Promotion> promotion = promotionRepository.findById(id);
         return promotion.map(value -> ResponseHandler.response("Promotion fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Promotion not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @Cacheable("promotion")
-    public ResponseEntity<Object> getPromotionByStoreId(UUID storeId) {
+    public ResponseEntity<Object> getPromotionByStoreId(Long storeId) {
         Optional<Promotion> promotion = promotionRepository.findById(storeId);
         return promotion.map(value -> ResponseHandler.response("Promotion fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Promotion not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "promotion")
-    public ResponseEntity<Object> savePromotion(UUID storeId, PromotionDto promotionDto) {
+    public ResponseEntity<Object> savePromotion(Long storeId, PromotionDto promotionDto) {
         Optional<Store> store = storeRepository.findById(storeId);
         if (store.isPresent()) {
 
@@ -66,12 +66,12 @@ public class PromotionService implements IPromotionService {
 
     @Override
     @CacheEvict(allEntries = true, value = "promotion")
-    public ResponseEntity<Object> updatePromotion(UUID storeId, PromotionDto promotionDto) {
+    public ResponseEntity<Object> updatePromotion(Long storeId, PromotionDto promotionDto) {
         Optional<Store> store = storeRepository.findById(storeId);
         if (store.isPresent()) {
 
             Promotion promotion = Promotion.builder()
-                    .promotionId(UUID.fromString(promotionDto.getPromotionId()))
+                    .promotionId(promotionDto.getPromotionId())
                     .description(promotionDto.getDescription())
                     .endDate(promotionDto.getEndDate())
                     .store(store.get())
@@ -84,7 +84,7 @@ public class PromotionService implements IPromotionService {
 
     @Override
     @CacheEvict(allEntries = true, value = "promotion")
-    public ResponseEntity<Object> deleteByPromotionId(UUID id) {
+    public ResponseEntity<Object> deleteByPromotionId(Long id) {
         promotionRepository.deleteById(id);
         return ResponseHandler.response("Promotion deleted", HttpStatus.OK, null);
     }

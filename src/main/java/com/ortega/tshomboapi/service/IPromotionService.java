@@ -13,10 +13,10 @@ import java.util.UUID;
 public interface IPromotionService {
 
     public ResponseEntity<Object> getAllPromotions();
-    public ResponseEntity<Object> getPromotionById(UUID id);
-    public ResponseEntity<Object> getPromotionByStoreId(UUID id);
-    public ResponseEntity<Object> savePromotion(UUID storeId, PromotionDto promotionDto);
-    public ResponseEntity<Object> updatePromotion(UUID userId, PromotionDto promotionDto);
-    public ResponseEntity<Object> deleteByPromotionId(UUID id);
+    public ResponseEntity<Object> getPromotionById(Long id);
+    public ResponseEntity<Object> getPromotionByStoreId(Long id);
+    public ResponseEntity<Object> savePromotion(Long storeId, PromotionDto promotionDto);
+    public ResponseEntity<Object> updatePromotion(Long userId, PromotionDto promotionDto);
+    public ResponseEntity<Object> deleteByPromotionId(Long id);
 
 }

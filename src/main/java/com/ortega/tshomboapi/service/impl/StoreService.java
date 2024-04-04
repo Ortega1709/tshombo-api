@@ -37,21 +37,21 @@ public class StoreService implements IStoreService {
 
     @Override
     @Cacheable("store")
-    public ResponseEntity<Object> getStoreById(UUID id) {
+    public ResponseEntity<Object> getStoreById(Long id) {
         Optional<Store> store = storeRepository.findById(id);
         return store.map(value -> ResponseHandler.response("Store fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Store not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @Cacheable("store")
-    public ResponseEntity<Object> getStoreByUserId(UUID id) {
+    public ResponseEntity<Object> getStoreByUserId(Long id) {
         Optional<Store> store = storeRepository.findStoreByUserId(id);
         return store.map(value -> ResponseHandler.response("Store fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Store not found", HttpStatus.NOT_FOUND, null));
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public ResponseEntity<Object> saveStore(UUID userId, StoreDto storeDto) {
+    public ResponseEntity<Object> saveStore(Long userId, StoreDto storeDto) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
 
@@ -73,12 +73,12 @@ public class StoreService implements IStoreService {
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public ResponseEntity<Object> updateStore(UUID userId, StoreDto storeDto) {
+    public ResponseEntity<Object> updateStore(Long userId, StoreDto storeDto) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             locationRepository.save(storeDto.getLocation());
             Store store = Store.builder()
-                    .storeId(UUID.fromString(storeDto.getStoreId()))
+                    .storeId(storeDto.getStoreId())
                     .name(storeDto.getName())
                     .city(storeDto.getCity())
                     .avenue(storeDto.getAvenue())
@@ -96,7 +96,7 @@ public class StoreService implements IStoreService {
 
     @Override
     @CacheEvict(allEntries = true, value = "store")
-    public ResponseEntity<Object> deleteStoreById(UUID id) {
+    public ResponseEntity<Object> deleteStoreById(Long id) {
         storeRepository.deleteById(id);
         return ResponseHandler.response("User deleted", HttpStatus.OK, null);
     }

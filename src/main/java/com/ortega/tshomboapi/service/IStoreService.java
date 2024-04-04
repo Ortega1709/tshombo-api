@@ -11,10 +11,10 @@ import java.util.UUID;
 public interface IStoreService {
 
     public ResponseEntity<Object> getAllStores();
-    public ResponseEntity<Object> getStoreById(UUID id);
-    public ResponseEntity<Object> getStoreByUserId(UUID id);
-    public ResponseEntity<Object> saveStore(UUID userId, StoreDto storeDto);
-    public ResponseEntity<Object> updateStore(UUID userId, StoreDto storeDto);
-    public ResponseEntity<Object> deleteStoreById(UUID id);
+    public ResponseEntity<Object> getStoreById(Long id);
+    public ResponseEntity<Object> getStoreByUserId(Long id);
+    public ResponseEntity<Object> saveStore(Long userId, StoreDto storeDto);
+    public ResponseEntity<Object> updateStore(Long userId, StoreDto storeDto);
+    public ResponseEntity<Object> deleteStoreById(Long id);
 
 }

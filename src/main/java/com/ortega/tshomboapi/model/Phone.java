@@ -6,17 +6,15 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Phone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID phoneId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long phoneId;
     private String brand;
     private String description;
     private Double price;

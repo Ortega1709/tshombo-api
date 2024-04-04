@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class PromotionDto {
 
-    private String promotionId;
+    private Long promotionId;
     private String name;
     private String description;
     private String image;
