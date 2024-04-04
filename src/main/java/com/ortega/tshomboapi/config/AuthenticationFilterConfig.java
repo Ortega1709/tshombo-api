@@ -8,6 +8,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.web.filter.GenericFilterBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class AuthenticationFilterConfig extends GenericFilterBean {
@@ -32,10 +34,8 @@ public class AuthenticationFilterConfig extends GenericFilterBean {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            PrintWriter writer = httpResponse.getWriter();
-            writer.print(exp.getMessage());
-            writer.flush();
-            writer.close();
+
+            log.error(exp.getMessage());
         }
 
         filterChain.doFilter(request, response);

@@ -2,13 +2,10 @@ package com.ortega.tshomboapi.controller;
 
 import com.ortega.tshomboapi.model.User;
 import com.ortega.tshomboapi.service.IUserService;
-import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
