@@ -14,6 +14,6 @@ import java.util.UUID;
 public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM promotion WHERE store_id = :storeId")
-    Optional<Store> findPromotionByStoreId(@Param("storeId") Long id);
+    Optional<Promotion> findPromotionByStoreId(@Param("storeId") Long id);
 
 }

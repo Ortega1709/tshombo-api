@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PromotionService implements IPromotionService {
@@ -42,7 +41,7 @@ public class PromotionService implements IPromotionService {
     @Override
     @Cacheable("promotion")
     public ResponseEntity<Object> getPromotionByStoreId(Long storeId) {
-        Optional<Promotion> promotion = promotionRepository.findById(storeId);
+        Optional<Promotion> promotion = promotionRepository.findPromotionByStoreId(storeId);
         return promotion.map(value -> ResponseHandler.response("Promotion fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Promotion not found", HttpStatus.NOT_FOUND, null));
     }
 
