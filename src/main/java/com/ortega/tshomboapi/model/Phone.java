@@ -21,7 +21,7 @@ public class Phone {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name="storeId", nullable=false)
+    @JoinColumn(name="storeId")
     private Store store;
 
 }

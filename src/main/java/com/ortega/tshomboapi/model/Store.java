@@ -1,5 +1,6 @@
 package com.ortega.tshomboapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,9 +34,11 @@ public class Store {
     private Location location;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Phone> phones;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Promotion> promotions;
 
 }
