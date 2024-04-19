@@ -38,4 +38,9 @@ public class PhoneController {
     public ResponseEntity<Object> deletePhoneById(@PathVariable("id") Long id) {
         return phoneService.deleteByPhoneId(id);
     }
+
+    @GetMapping("/phones/{phoneId}")
+    public ResponseEntity<Object> getPhoneById(@PathVariable("phoneId") Long id) {
+        return phoneService.getPhoneById(id);
+    }
 }

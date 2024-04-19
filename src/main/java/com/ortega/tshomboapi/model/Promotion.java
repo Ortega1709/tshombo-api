@@ -22,7 +22,7 @@ public class Promotion {
     private String endDate;
 
     @ManyToOne
-    @JoinColumn(name="storeId")
+    @JoinColumn(referencedColumnName = "storeId")
     private Store store;
 
 }

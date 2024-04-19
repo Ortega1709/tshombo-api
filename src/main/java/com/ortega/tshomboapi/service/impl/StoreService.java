@@ -4,9 +4,7 @@ import com.ortega.tshomboapi.dto.StoreDto;
 import com.ortega.tshomboapi.model.Location;
 import com.ortega.tshomboapi.model.Store;
 import com.ortega.tshomboapi.model.User;
-import com.ortega.tshomboapi.repository.LocationRepository;
-import com.ortega.tshomboapi.repository.StoreRepository;
-import com.ortega.tshomboapi.repository.UserRepository;
+import com.ortega.tshomboapi.repository.*;
 import com.ortega.tshomboapi.service.IStoreService;
 import com.ortega.tshomboapi.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +23,8 @@ import java.util.UUID;
 public class StoreService implements IStoreService {
 
     private final StoreRepository storeRepository;
+    private final PhoneRepository phoneRepository;
+    private final PromotionRepository promotionRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
 
@@ -96,6 +96,8 @@ public class StoreService implements IStoreService {
     @Override
     @CacheEvict(allEntries = true, value = "store")
     public ResponseEntity<Object> deleteStoreById(Long id) {
+        promotionRepository.deletePromotionByStoreId(id);
+        phoneRepository.deletePhoneByStoreId(id);
         storeRepository.deleteById(id);
         return ResponseHandler.response("User deleted", HttpStatus.OK, null);
     }

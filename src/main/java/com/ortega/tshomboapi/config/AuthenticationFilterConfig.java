@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,23 +22,27 @@ import java.io.PrintWriter;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class AuthenticationFilterConfig extends GenericFilterBean {
+public class AuthenticationFilterConfig extends OncePerRequestFilter {
 
     private final AuthenticationService authenticationService;
+
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-      throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            Authentication authentication = authenticationService.getAuthentication((HttpServletRequest) request);
+            Authentication authentication = authenticationService.getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception exp) {
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             log.error(exp.getMessage());
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return request.getRequestURI().contains("/api/v1/storage/images/");
     }
 }

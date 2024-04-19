@@ -1,5 +1,10 @@
 package com.ortega.tshomboapi.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 public class UploadUtil {
@@ -22,6 +27,14 @@ public class UploadUtil {
         // file path
         return uniqueUUID + "." + extension;
 
+    }
+
+    public static File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {
+        File tempFile = new File(fileName);
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(multipartFile.getBytes());
+        }
+        return tempFile;
     }
 
 }

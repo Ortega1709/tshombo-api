@@ -25,19 +25,19 @@ public class Store {
     private String rccm;
     private String image;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "userId")
+    @OneToOne
+    @JoinColumn(referencedColumnName = "userId")
     private User user;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "locationId")
+    @OneToOne
+    @JoinColumn(referencedColumnName = "locationId")
     private Location location;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Phone> phones;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Promotion> promotions;
 

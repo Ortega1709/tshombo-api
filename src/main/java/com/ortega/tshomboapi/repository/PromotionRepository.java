@@ -18,4 +18,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
     @Query(nativeQuery = true, value = "UPDATE promotion SET image = :image WHERE promotion_id = :promotionId")
     void updatePromotionImage(@Param("image") String image, @Param("promotionId") Long id);
+
+    @Query(nativeQuery = true, value = "DELETE FROM promotion WHERE store_store_id = :storeId")
+    void deletePromotionByStoreId(@Param("storeId") Long id);
 }

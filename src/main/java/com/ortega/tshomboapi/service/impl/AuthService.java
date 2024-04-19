@@ -35,18 +35,18 @@ public class AuthService implements IAuthService {
             }
         }
 
-        return ResponseHandler.response("Authentication Error", HttpStatus.BAD_REQUEST, null);
+        return ResponseHandler.response("Authentication Error", HttpStatus.EXPECTATION_FAILED, null);
     }
 
     @Override
     @CacheEvict(allEntries = true, value = "user")
     public ResponseEntity<Object> register(RegisterDto registerDto) {
         if (userRepository.findUserByEmail(registerDto.getEmail()).isPresent()) {
-            return ResponseHandler.response("Email is already taken", HttpStatus.BAD_REQUEST, null);
+            return ResponseHandler.response("Email is already taken", HttpStatus.EXPECTATION_FAILED, null);
         }
 
         if (userRepository.findUserByUsername(registerDto.getUsername()).isPresent()) {
-            return ResponseHandler.response("Username is already taken", HttpStatus.BAD_REQUEST, null);
+            return ResponseHandler.response("Username is already taken", HttpStatus.EXPECTATION_FAILED, null);
         }
 
         // find a role by name

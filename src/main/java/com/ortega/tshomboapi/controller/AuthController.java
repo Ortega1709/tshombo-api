@@ -3,7 +3,6 @@ package com.ortega.tshomboapi.controller;
 import com.ortega.tshomboapi.dto.AuthDto;
 import com.ortega.tshomboapi.dto.RegisterDto;
 import com.ortega.tshomboapi.service.IAuthService;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

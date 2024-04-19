@@ -12,10 +12,13 @@ import java.util.UUID;
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM store WHERE user_id = :userId")
+    @Query(nativeQuery = true, value = "SELECT * FROM store WHERE user_user_id = :userId")
     Optional<Store> findStoreByUserId(@Param("userId") Long id);
 
     @Query(nativeQuery = true, value = "UPDATE store SET image = :image WHERE store_id = :storeId")
     void updateStoreImage(@Param("image") String image, @Param("storeId") Long id);
+
+    @Query(nativeQuery = true, value = "DELETE FROM store WHERE user_user_id = :userId")
+    void deleteStoreByUserId(@Param("userId") Long id);
 
 }

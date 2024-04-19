@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,8 +41,8 @@ public class PhoneService implements IPhoneService {
     @Override
     @Cacheable("phone")
     public ResponseEntity<Object> getPhoneByStoreId(Long id) {
-        Optional<Phone> phone = phoneRepository.findPhoneByStoreId(id);
-        return phone.map(value -> ResponseHandler.response("Phone fetched", HttpStatus.OK, value)).orElseGet(() -> ResponseHandler.response("Phone not found", HttpStatus.NOT_FOUND, null));
+        List<Phone> phone = phoneRepository.findPhoneByStoreId(id);
+        return ResponseHandler.response("Phone fetched", HttpStatus.OK, phone);
     }
 
     @Override
@@ -71,12 +72,13 @@ public class PhoneService implements IPhoneService {
             Phone phone = Phone.builder()
                     .phoneId(phoneDto.getPhoneId())
                     .brand(phoneDto.getBrand())
+                    .image(phoneDto.getImage())
                     .description(phoneDto.getDescription())
                     .price(phoneDto.getPrice())
                     .store(store.get())
                     .build();
 
-            return ResponseHandler.response("Phone updated", HttpStatus.CREATED, phoneRepository.save(phone));
+            return ResponseHandler.response("Phone updated", HttpStatus.OK, phoneRepository.save(phone));
         }
         return ResponseHandler.response("Store not found", HttpStatus.NOT_FOUND, null);
     }
